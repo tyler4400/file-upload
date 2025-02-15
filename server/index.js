@@ -7,6 +7,7 @@ const controller = new Controller();
 server.on("request", async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   if (req.method === "OPTIONS") {
     res.status = 200;
     res.end();
@@ -22,7 +23,7 @@ server.on("request", async (req, res) => {
     return;
   }
 
-  if (req.url === "/") {
+  if (req.url === "/upload") {
     await controller.handleFormData(req, res);
   }
 

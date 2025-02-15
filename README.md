@@ -31,3 +31,11 @@ npm install
 npm run start
 ```
 
+# 部署流程
+将client 和服务端代码分开来， 制作成镜像并部署
+1. 检出代码
+2. 登录到TCR镜像服务平台
+2. dockerfile制作镜像，并将镜像push到TCR
+3. 替换dokcer-compose文件的版本信息
+2. 将.env， docker-compose文件拷贝到cvm
+3. 登录cvm， docker-compose up -d

@@ -4,7 +4,7 @@ const fse = require("fs-extra");
 
 // 大文件存储目录
 // demo directory
-const UPLOAD_DIR = path.resolve(__dirname, "..", "target");
+const UPLOAD_DIR = path.resolve(__dirname, ".", "file-save");
 
 // 提取后缀名
 // get file extension

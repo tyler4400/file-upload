@@ -56,7 +56,9 @@
 <script>
 // 切片大小
 // chunk size
-const SIZE = 10 * 1024 * 1024;
+import request from "@/request";
+
+const SIZE = 1 * 1024 * 1024;
 
 const Status = {
   wait: "wait",
@@ -111,8 +113,8 @@ export default {
   },
   methods: {
     async handleDelete() {
-      const { data } = await this.request({
-        url: "http://localhost:3000/delete"
+      const { data } = await request({
+        url: "/delete"
       });
       if (JSON.parse(data).code === 0) {
         this.$message.success("delete success");
@@ -137,39 +139,6 @@ export default {
       );
       await this.uploadChunks(uploadedList);
     },
-    // xhr
-    request({
-      url,
-      method = "post",
-      data,
-      headers = {},
-      onProgress = e => e,
-      requestList
-    }) {
-      return new Promise(resolve => {
-        const xhr = new XMLHttpRequest();
-        xhr.upload.onprogress = onProgress;
-        xhr.open(method, url);
-        Object.keys(headers).forEach(key =>
-          xhr.setRequestHeader(key, headers[key])
-        );
-        xhr.send(data);
-        xhr.onload = e => {
-          // 将请求成功的 xhr 从列表中删除
-          // remove xhr which status is success
-          if (requestList) {
-            const xhrIndex = requestList.findIndex(item => item === xhr);
-            requestList.splice(xhrIndex, 1);
-          }
-          resolve({
-            data: e.target.response
-          });
-        };
-        // 暴露当前 xhr 给外部
-        // export xhr
-        requestList?.push(xhr);
-      });
-    },
     // 生成文件切片
     // create file chunk
     createFileChunk(file, size = SIZE) {
@@ -188,6 +157,7 @@ export default {
         this.container.worker = new Worker("/hash.js");
         this.container.worker.postMessage({ fileChunkList });
         this.container.worker.onmessage = e => {
+          console.log("worker.onmessage", e);
           const { percentage, hash } = e.data;
           this.hashPercentage = percentage;
           if (hash) {
@@ -246,8 +216,8 @@ export default {
           return { formData, index };
         })
         .map(({ formData, index }) =>
-          this.request({
-            url: "http://localhost:3000",
+          request({
+            url: "/upload",
             data: formData,
             onProgress: this.createProgressHandler(this.data[index]),
             requestList: this.requestList
@@ -265,8 +235,8 @@ export default {
     // 通知服务端合并切片
     // notify server to merge chunks
     async mergeRequest() {
-      await this.request({
-        url: "http://localhost:3000/merge",
+      await request({
+        url: "/merge",
         headers: {
           "content-type": "application/json"
         },
@@ -284,8 +254,8 @@ export default {
     // verify that the file has been uploaded based on the hash
     // skip if uploaded
     async verifyUpload(filename, fileHash) {
-      const { data } = await this.request({
-        url: "http://localhost:3000/verify",
+      const { data } = await request({
+        url: "/verify",
         headers: {
           "content-type": "application/json"
         },

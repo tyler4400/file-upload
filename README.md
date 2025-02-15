@@ -23,12 +23,18 @@ Backend
 * multiparty: resolve formData
 
 # start
-```
+启动前端
+```shell
 npm install
+npm run dev
+# or in production
+npm run prod 
 ```
-
-```
-npm run start
+启动后端
+```shell
+cd server
+npm install
+npm run serve
 ```
 
 # 部署流程

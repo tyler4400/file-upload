@@ -7,5 +7,5 @@ COPY package.json package-lock.json /demo/file-upload/frontend/
 RUN npm install
 COPY --exclude=server . /demo/file-upload/frontend/
 EXPOSE 8080
-RUN npm run prod
+CMD npm run prod
 

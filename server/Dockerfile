@@ -7,5 +7,5 @@ COPY package.json package-lock.json /demo/file-upload/backend/
 RUN npm install
 COPY . /demo/file-upload/backend/
 EXPOSE 3000
-RUN npm run serve
+CMD npm run serve
 

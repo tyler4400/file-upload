@@ -1,13 +1,13 @@
 name: 自动部署新版本到服务器
 
-on:
-  # 在针对 `main` 分支的推送上运行。如果你
-  # 使用 `master` 分支作为默认分支，请将其更改为 `master`
-  push:
-    branches: [master]
-
-  # 允许你从 Actions 选项卡手动运行此工作流程
-  workflow_dispatch:
+#on:
+#  # 在针对 `main` 分支的推送上运行。如果你
+#  # 使用 `master` 分支作为默认分支，请将其更改为 `master`
+#  push:
+#    branches: [master]
+#
+#  # 允许你从 Actions 选项卡手动运行此工作流程
+#  workflow_dispatch:
 
 jobs:
   build:
@@ -20,25 +20,25 @@ jobs:
       - name: 登录到TCR
         run: docker login ccr.ccs.tencentyun.com --username=${{ secrets.TCR_USERNAME }} --password=${{ secrets.TCR_PASSWORD }}
       - name: 构建前端镜像
-        run: docker build --tag "ccr.ccs.tencentyun.com/tyler-namespace1/file-upload1:${{ github.ref_name }}" .
+        run: docker build --tag "ccr.ccs.tencentyun.com/tyler-namespace1/file-upload1:${{ github.sha }}" .
       - name: 推送前端镜像
           # 开启调试模式，打印每条命令及其输出
         run: |
           set -x 
-          docker push ccr.ccs.tencentyun.com/tyler-namespace1/file-upload1:${{ github.ref_name }}
+          docker push ccr.ccs.tencentyun.com/tyler-namespace1/file-upload1:${{ github.sha }}
       - name: 构建后端镜像
         run: |
           cd server
-          docker build --tag "ccr.ccs.tencentyun.com/tyler-namespace1/file-upload2:${{ github.ref_name }}" .
+          docker build --tag "ccr.ccs.tencentyun.com/tyler-namespace1/file-upload2:${{ github.sha }}" .
       - name: 推送后端镜像
         run: |
           set -x 
-          docker push ccr.ccs.tencentyun.com/tyler-namespace1/file-upload2:${{ github.ref_name }}
+          docker push ccr.ccs.tencentyun.com/tyler-namespace1/file-upload2:${{ github.sha }}
       - name: 创建envfile和docker-composefile
         # .env文件是给docker-compose读取，拉对应的image
         run: |
           mkdir file-upload
-          echo "tag=${{ github.ref_name }}" > file-upload/.env
+          echo "tag=${{ github.sha }}" > file-upload/.env
           cp docker-compose.yml file-upload
       - name: 将文件上传到cvm
         uses: appleboy/scp-action@master

@@ -19,14 +19,14 @@ jobs:
           mkdir file-upload
           echo "tag=${{ github.sha }}" > file-upload/.env
           cat file-upload/.env
-      - name: 将文件上传到cvm
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PWD }}
-          source: 'file-upload'
-          target: '~/demo/'
+#      - name: 将文件上传到cvm
+#        uses: appleboy/scp-action@master
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ${{ secrets.SSH_USER }}
+#          password: ${{ secrets.SSH_PWD }}
+#          source: 'file-upload'
+#          target: '~/demo/'
       - name: 登录到服务器并部署
         uses: appleboy/ssh-action@master
         with:

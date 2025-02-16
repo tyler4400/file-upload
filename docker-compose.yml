@@ -8,6 +8,7 @@ services:
     ports:
       - 85:8080
   file-upload-backend:
+    # ${tag} 插值会自动读取.env文件中的值，需要提前设置好
     image: ccr.ccs.tencentyun.com/tyler-namespace1/file-upload2:${tag}
     container_name: file-upload-backend
     ports:

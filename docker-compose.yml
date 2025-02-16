@@ -1,0 +1,14 @@
+name: file-upload
+
+services:
+  # services下会自动创建一个网络
+  file-upload-front:
+    image: ccr.ccs.tencentyun.com/tyler-namespace1/file-upload1:${tag}
+    container_name: file-upload-front
+    ports:
+      - 85:8080
+  file-upload-backend:
+    image: ccr.ccs.tencentyun.com/tyler-namespace1/file-upload2:${tag}
+    container_name: file-upload-backend
+    ports:
+      - "3000:3000"

@@ -1,6 +1,6 @@
 const baseUrl =
   process.env.NODE_ENV === "production"
-    ? "http://file-server:3000"
+    ? "http://file-upload-backend:3000"
     : "http://localhost:3000";
 console.log("baseUrl", baseUrl);
 

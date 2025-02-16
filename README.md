@@ -39,6 +39,7 @@ npm run serve
 
 # 部署流程
 将client 和服务端代码分开来， 制作成镜像并部署
+> 虽然client是个前端项目， 这里也当作后端项目来部署
 1. 检出代码
 2. 登录到TCR镜像服务平台
 2. dockerfile制作镜像，并将镜像push到TCR

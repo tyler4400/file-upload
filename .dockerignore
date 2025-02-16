@@ -1,3 +1,6 @@
+# 前端构建时 忽略server目录
+server
+
 # Logs
 logs
 *.log

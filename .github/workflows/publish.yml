@@ -22,13 +22,18 @@ jobs:
       - name: 构建前端镜像
         run: docker build --tag "ccr.ccs.tencentyun.com/tyler-namespace1/file-upload1:${{ github.ref_name }}" .
       - name: 推送前端镜像
-        run: docker push ccr.ccs.tencentyun.com/tyler-namespace1/file-upload1:${{ github.ref_name }}
+          # 开启调试模式，打印每条命令及其输出
+        run: |
+          set -x 
+          docker push ccr.ccs.tencentyun.com/tyler-namespace1/file-upload1:${{ github.ref_name }}
       - name: 构建后端镜像
         run: |
           cd server
           docker build --tag "ccr.ccs.tencentyun.com/tyler-namespace1/file-upload2:${{ github.ref_name }}" .
       - name: 推送后端镜像
-        run: docker push ccr.ccs.tencentyun.com/tyler-namespace1/file-upload2:${{ github.ref_name }}
+        run: |
+          set -x 
+          docker push ccr.ccs.tencentyun.com/tyler-namespace1/file-upload2:${{ github.ref_name }}
       - name: 创建envfile和docker-composefile
         # .env文件是给docker-compose读取，拉对应的image
         run: |

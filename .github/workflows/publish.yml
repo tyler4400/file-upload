@@ -43,7 +43,7 @@ jobs:
           password: ${{ secrets.SSH_PWD }}
           source: 'file-upload'
           target: '~/demo/'
-      - name: 登录到服务器
+      - name: 登录到服务器并部署
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}

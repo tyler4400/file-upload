@@ -32,7 +32,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PWD }}
+          key: ${{ secrets.RSA_PRIVATE_KEY }}
           script: |
             ls
             docker login ccr.ccs.tencentyun.com --username=${{ secrets.TCR_USERNAME }} --password=${{ secrets.TCR_PASSWORD }}

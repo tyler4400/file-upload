@@ -19,6 +19,7 @@
         >pause</el-button
       >
       <el-button @click="handleDelete">delete</el-button>
+      <el-button @click="handleGetFile">查看上传的文件</el-button>
     </div>
     <div>
       <div>
@@ -123,6 +124,13 @@ export default {
     handlePause() {
       this.status = Status.pause;
       this.resetData();
+    },
+    handleGetFile() {
+      const url =
+        process.env.NODE_ENV === "production"
+          ? "http://49.234.117.123:3000/files"
+          : "http://localhost:3000/files";
+      window.open(url, "_blank");
     },
     resetData() {
       this.requestList.forEach(xhr => xhr?.abort());

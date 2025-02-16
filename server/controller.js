@@ -1,6 +1,7 @@
 const multiparty = require("multiparty");
 const path = require("path");
 const fse = require("fs-extra");
+const { readdirSync } = require("node:fs");
 
 // 大文件存储目录
 // demo directory
@@ -107,6 +108,31 @@ module.exports = class {
         message: "file delete success"
       })
     );
+  }
+  // 获取文件目录
+  // delete all the files
+  async handleFIleList(req, response) {
+    response.statusCode = 200;
+    response.setHeader("content-type", "text/html");
+    fse.ensureDirSync(UPLOAD_DIR);
+    const files = readdirSync(UPLOAD_DIR);
+    console.log(files);
+
+    response.write(
+      `<html>
+          <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width,initial-scale=1.0">
+            <title>文件目录</title>
+          </head>
+          <body>
+          <h1>上传的文件目录 </h1>
+          <p>${files}</p>
+          </body>
+          </html>`
+    );
+    response.end();
   }
 
   // 处理切片

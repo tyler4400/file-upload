@@ -13,6 +13,10 @@ server.on("request", async (req, res) => {
     res.end();
     return;
   }
+  if (req.method === "GET" && req.url === "/files") {
+    await controller.handleFIleList(req, res);
+    return;
+  }
   if (req.url === "/verify") {
     await controller.handleVerifyUpload(req, res);
     return;

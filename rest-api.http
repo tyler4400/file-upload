@@ -1,0 +1,17 @@
+POST http://49.234.117.123:3000/verify
+Content-Type: application/json
+
+{
+  "filename": "123",
+  "fileHash": "456"
+}
+
+<> 2025-02-17T214912.200.txt
+
+###
+GET http://49.234.117.123:85/?id=99
+Accept: application/json
+
+<> 2025-02-17T214431.200.html
+
+###

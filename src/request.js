@@ -1,7 +1,7 @@
 const baseUrl =
   process.env.NODE_ENV === "production"
     ? "http://49.234.117.123:3000"
-    : "http://localhost:3000";
+    : "http://localhost:7001";
 console.log("baseUrl", baseUrl);
 
 const request = ({

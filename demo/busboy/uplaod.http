@@ -1,0 +1,27 @@
+#设置boundary：在Content-Type头中指定boundary值，用于分隔不同的form-data部分。
+#文件部分：使用<符号后跟文件路径来引用本地文件，文件路径相对于HTTP文件的位置。
+#Content-Disposition：必须包含filename参数来指定文件名。
+#多字段支持：可以在同一个请求中包含多个字段，包括普通文本字段和文件字段。
+#文件引用语法：
+#   < ./path/to/file - 传统语法 表示相对于HTTP文件所在目录的相对路径
+### 文件上传示例1
+POST {{host}}:{{port}}/
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="element-name"
+Content-Type: text/plain
+
+Name
+--WebAppBoundary
+Content-Disposition: form-data; name="aaa"; filename="data.json"
+Content-Type: application/json
+
+< ./http-client.env.json
+--WebAppBoundary
+Content-Disposition: form-data; name="bbb"; filename="data2.json"
+Content-Type: application/json
+
+< ./http-client.env.json
+--WebAppBoundary--
+
